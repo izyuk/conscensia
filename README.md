@@ -22,7 +22,4 @@ Launches the window in which you can choose different tests. ATTENTION before la
 For this use `npm start` See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 
-P.S. Here also possible to create tests to compare expected object with <br> 
-Redux store output. Right now it's not possible to do because inside of the tests <br>
-I'm randomly choosing room for procedures. You will fully understand what I mean <br>
-when you will see how it works 
+P.S. Here also possible to create tests to compare expected object with Redux store output. Right now it's not possible to do because inside of the tests I'm randomly choosing room for procedures. You will fully understand what I mean when you will see how it works 
