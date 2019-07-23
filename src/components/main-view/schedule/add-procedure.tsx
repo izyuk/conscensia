@@ -21,7 +21,7 @@ interface ScheduleData {
 
 class AddProcedure extends React.Component<ScheduleData> {
 
-    public state: ScheduleData = {
+    private state: ScheduleData = {
         doctorToList: 'Choose doctor form list',
         patientToList: 'Choose patient form list',
         description: '',
@@ -57,7 +57,7 @@ class AddProcedure extends React.Component<ScheduleData> {
             <form onSubmit={e => e.preventDefault()}>
                 <label>
                     <span>Doctor</span>
-                    <select name="doctorToList" id="doctorsToList" defaultValue={doctorToList}
+                    <select data-cy={'doctorName'} name="doctorToList" id="doctorsToList" defaultValue={doctorToList}
                             onChange={this.inputsHandler}>
                         <option value="Choose doctor form list" disabled>Choose doctor form list</option>
                         {this.props.doctors && this.props.doctors.map((item, i) => {
@@ -67,7 +67,7 @@ class AddProcedure extends React.Component<ScheduleData> {
                 </label>
                 <label>
                     <span>Patient</span>
-                    <select name="patientToList" id="patientToList" defaultValue={patientToList}
+                    <select data-cy={'patientName'} name="patientToList" id="patientToList" defaultValue={patientToList}
                             onChange={this.inputsHandler}>
                         <option value="Choose patient form list" disabled>Choose patient form list</option>
                         {this.props.patientsList && this.props.patientsList.map((item, i) => {
@@ -77,7 +77,7 @@ class AddProcedure extends React.Component<ScheduleData> {
                 </label>
                 <label>
                     <span>Status</span>
-                    <select name="status" id="status" defaultValue={status}
+                    <select data-cy={'status'} name="status" id="status" defaultValue={status}
                             onChange={this.inputsHandler}>
                         <option value="Choose status" disabled>Choose status</option>
                         <option value="Planned">Planned</option>
@@ -87,37 +87,41 @@ class AddProcedure extends React.Component<ScheduleData> {
                 </label>
                 <label>
                     <span>Enter description</span>
-                    <textarea name="description" id="" cols="30" rows="10" value={description} onChange={this.inputsHandler}></textarea>
+                    <textarea data-cy={'description'} name="description" id="" cols="30" rows="10" value={description}
+                              onChange={this.inputsHandler}></textarea>
                 </label>
                 <label>
                     <span>Room number</span>
-                    <select name="roomNumber" id="roomNumber" defaultValue={roomNumber}
+                    <select data-cy={'room'} name="roomNumber" id="roomNumber" defaultValue={roomNumber}
                             onChange={this.inputsHandler}>
                         <option value="Choose room" disabled>Choose room</option>
                         {roomList && roomList.map((item, i) => {
                             return <option key={i} value={item}>{item}</option>
                         })}
                     </select>
-                    {/*<input type="number" name={'roomNumber'} value={roomNumber} onChange={this.inputsHandler}/>*/}
                 </label>
                 <label>
                     <span>Planned Start time</span>
-                    <input type="time" name={'timeStart'} value={timeStart} onChange={this.inputsHandler}/>
+                    <input data-cy={'startTime'} type="time" name={'timeStart'} value={timeStart}
+                           onChange={this.inputsHandler}/>
                 </label>
                 <label>
                     <span>Estimated End time</span>
-                    <input type="time" name={'timeEnd'} value={timeEnd} onChange={this.inputsHandler}/>
+                    <input data-cy={'endTime'} type="time" name={'timeEnd'} value={timeEnd}
+                           onChange={this.inputsHandler}/>
                 </label>
                 <button disabled={
-                        (doctorToList === 'Choose doctor form list' ||
+                    (doctorToList === 'Choose doctor form list' ||
                         patientToList === 'Choose patient form list' ||
                         description === '' ||
                         roomNumber === '' ||
                         status === 'Choose status' ||
                         timeStart === '')
-                    }
-                    type={'button'}
-                    onClick={this.addProcedure}>Add procedure</button>
+                }
+                        type={'button'}
+                        data-cy={'addProcedure'}
+                        onClick={this.addProcedure}>Add procedure
+                </button>
             </form>
         )
     }

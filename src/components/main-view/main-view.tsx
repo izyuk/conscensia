@@ -6,29 +6,16 @@ import ScheduleList from './schedule/schedule-list';
 import AddProcedure from './schedule/add-procedure';
 import {getDoctors} from "../../API/API";
 import {connect} from 'react-redux';
-import {roomsList} from "../../room-list";
 
 
 interface ScheduleData {
-    doctors?: any,
-    // doctorToList?: string,
-    // patientToList?: string,
-    // description?: string,
-    // roomNumber?: any,
-    // timeStart?: string,
-    // timeEnd?: string,
+    doctors?: any
 }
 
 class MainView extends React.Component<ScheduleData> {
 
-    public state: ScheduleData = {
-        doctors: [],
-        // doctorToList: '',
-        // patientToList: '',
-        // description: '',
-        // roomNumber: '',
-        // timeStart: '',
-        // timeEnd: '',
+    private state: ScheduleData = {
+        doctors: []
     };
 
     private doctorsHandler = async () => {

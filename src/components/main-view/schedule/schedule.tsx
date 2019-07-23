@@ -6,9 +6,6 @@ interface Schedule {
 
 class Schedule extends React.Component<Schedule>{
 
-    public state:Schedule = {};
-
-
     render(){
         return (
             <table>
