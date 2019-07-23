@@ -5,15 +5,25 @@ interface Schedule {
 }
 
 const ScheduleList: React.FC<Schedule> = (props: Schedule) => {
-    return <div></div>
-        // {props.list ? props.list.map((item, i) => {
-        //         return <tr>
-        //             <td></td>
-        //         </tr>
-        //     }) : <tr>
-        //         <td colSpan={'7'} style={{textAlign: 'center'}}>Empty schedule</td>
-        //     </tr>}
 
-}
+    return (
+        <tbody>
+        {
+            props.list && props.list.map((item, i) => <tr key={i}>
+                    <td>{item.patientToList}</td>
+                    <td>{item.description}</td>
+                    <td>{item.status}</td>
+                    <td>{item.timeStart}</td>
+                    <td>{item.timeEnd}</td>
+                    <td>{item.roomNumber}</td>
+                    <td>{item.doctorToList}</td>
+                </tr>
+            )
+        }
+        </tbody>
+    )
+
+
+};
 
 export default ScheduleList;

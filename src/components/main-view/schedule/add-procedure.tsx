@@ -5,98 +5,131 @@ import * as React from 'react';
 // import ScheduleList from './schedule/schedule-list';
 // import {getDoctors} from "../../API/API";
 import {connect} from 'react-redux';
+import {roomsList} from "../../../room-list";
 
 
 interface ScheduleData {
-    patients: any,
-    doctors: any,
-    list?: any
+    doctorToList?: string,
+    patientToList?: string,
+    description?: string,
+    roomNumber?: any,
+    roomList?: any,
+    status?: string,
+    timeStart?: string,
+    timeEnd?: string,
 }
 
 class AddProcedure extends React.Component<ScheduleData> {
 
     public state: ScheduleData = {
-        patients: '' || this.props.patientsList,
-        doctors: [],
-        list: []
+        doctorToList: 'Choose doctor form list',
+        patientToList: 'Choose patient form list',
+        description: '',
+        roomNumber: 'Choose room',
+        roomList: roomsList(),
+        status: 'Choose status',
+        timeStart: '',
+        timeEnd: ''
     };
-
-    componentDidMount(): void {
-        this.doctorsHandler();
-    }
-
-    componentDidUpdate(): void {
-        console.log(this.state);
-    }
 
     inputsHandler = ({target}) => {
-        const currentState = this.state;
-        currentState.list[target.name] = target.value;
-        this.setState(currentState);
+        this.setState({
+            [target.name]: target.value
+        });
     };
-
     addProcedure = () => {
-        const currentState = this.state;
-        this.props.setSchedule(currentState.list)
+        const {roomList, ...rest} = this.state;
+        this.props.setSchedule(rest);
+        this.setState({
+            doctorToList: 'Choose doctor form list',
+            patientToList: 'Choose patient form list',
+            description: '',
+            roomNumber: 'Choose room',
+            status: 'Choose status',
+            timeStart: '',
+            timeEnd: ''
+        })
     };
 
     render() {
-        const {patients, doctors, list} = this.state;
+        const {doctorToList, patientToList, description, roomNumber, timeStart, timeEnd, status, roomList} = this.state;
         return (
-            <div>
-
-                <form onSubmit={e => e.preventDefault()}>
-                    <label>
-                        Doctor
-                        <select name="doctorsToList" id="doctorsToList" onChange={this.inputsHandler}>
-                            {doctors && doctors.map((item, i) => {
-                                return <option key={i} value={item.name}>{item.name}</option>
-                            })}
-                        </select>
-                    </label>
-                    <label>
-                        Patient
-                        <select name="patientToList" id="patientToList" value={'Choose patient form list'} onChange={this.inputsHandler}>
-                            <option value="Choose patient form list" disabled>Choose patient form list</option>
-                            {patients && patients.map((item, i) => {
-                                return <option key={i} value={item.name}>{item.name}</option>
-                            })}
-                        </select>
-                    </label>
-                    <label>
-                        Enter description
-                        <textarea name="description" id="" cols="30" rows="10" onChange={this.inputsHandler}></textarea>
-                    </label>
-                    <label>
-                        Room number
-                        <input type="number" name={'roomNumber'} onChange={this.inputsHandler}/>
-                    </label>
-                    <label>
-                        Planned Start time
-                        <input type="time" name={'startTime'} onChange={this.inputsHandler}/>
-                    </label>
-                    <label>
-                        Estimated End time
-                        <input type="time" name={'endTime'} onChange={this.inputsHandler}/>
-                    </label>
-                    <button onChange={this.addProcedure}>Add procedure</button>
-                </form>
-            </div>
+            <form onSubmit={e => e.preventDefault()}>
+                <label>
+                    <span>Doctor</span>
+                    <select name="doctorToList" id="doctorsToList" defaultValue={doctorToList}
+                            onChange={this.inputsHandler}>
+                        <option value="Choose doctor form list" disabled>Choose doctor form list</option>
+                        {this.props.doctors && this.props.doctors.map((item, i) => {
+                            return <option key={i} value={item.name}>{item.name}</option>
+                        })}
+                    </select>
+                </label>
+                <label>
+                    <span>Patient</span>
+                    <select name="patientToList" id="patientToList" defaultValue={patientToList}
+                            onChange={this.inputsHandler}>
+                        <option value="Choose patient form list" disabled>Choose patient form list</option>
+                        {this.props.patientsList && this.props.patientsList.map((item, i) => {
+                            return <option key={i} value={item.name}>{item.name}</option>
+                        })}
+                    </select>
+                </label>
+                <label>
+                    <span>Status</span>
+                    <select name="status" id="status" defaultValue={status}
+                            onChange={this.inputsHandler}>
+                        <option value="Choose status" disabled>Choose status</option>
+                        <option value="Planned">Planned</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Finished">Finished</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Enter description</span>
+                    <textarea name="description" id="" cols="30" rows="10" value={description} onChange={this.inputsHandler}></textarea>
+                </label>
+                <label>
+                    <span>Room number</span>
+                    <select name="roomNumber" id="roomNumber" defaultValue={roomNumber}
+                            onChange={this.inputsHandler}>
+                        <option value="Choose room" disabled>Choose room</option>
+                        {roomList && roomList.map((item, i) => {
+                            return <option key={i} value={item}>{item}</option>
+                        })}
+                    </select>
+                    {/*<input type="number" name={'roomNumber'} value={roomNumber} onChange={this.inputsHandler}/>*/}
+                </label>
+                <label>
+                    <span>Planned Start time</span>
+                    <input type="time" name={'timeStart'} value={timeStart} onChange={this.inputsHandler}/>
+                </label>
+                <label>
+                    <span>Estimated End time</span>
+                    <input type="time" name={'timeEnd'} value={timeEnd} onChange={this.inputsHandler}/>
+                </label>
+                <button disabled={
+                        (doctorToList === 'Choose doctor form list' ||
+                        patientToList === 'Choose patient form list' ||
+                        description === '' ||
+                        roomNumber === '' ||
+                        status === 'Choose status' ||
+                        timeStart === '')
+                    }
+                    type={'button'}
+                    onClick={this.addProcedure}>Add procedure</button>
+            </form>
         )
     }
 }
 
 export default connect(
     state => ({
-        // patientsList: state.patientsList,
-        // scheduleList: state.scheduleList
+        patientsList: state.patientsList
     }),
     dispatch => ({
-        // setDoctors: (data: object) => {
-        //     dispatch({type: 'SET_DOCTORS', payload: data})
-        // },
-        // setSchedule: (data: object) => {
-        //     dispatch({type: 'SET_SCHEDULE', payload: data})
-        // }
+        setSchedule: (data: object) => {
+            dispatch({type: 'SET_SCHEDULE', payload: data})
+        }
     })
 )(AddProcedure);

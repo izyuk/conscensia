@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {connect} from "react-redux";
 
 interface Schedule {
     list?: any
@@ -7,9 +6,7 @@ interface Schedule {
 
 class Schedule extends React.Component<Schedule>{
 
-    public state:Schedule = {
-        list: ''
-    };
+    public state:Schedule = {};
 
 
     render(){
@@ -26,16 +23,10 @@ class Schedule extends React.Component<Schedule>{
                     <th>Doctor</th>
                 </tr>
                 </thead>
-                <tbody>
                 {this.props.children}
-                </tbody>
             </table>
         )
     }
 }
 
-export default connect(
-    state => ({
-        state: state
-    })
-)(Schedule);
+export default Schedule

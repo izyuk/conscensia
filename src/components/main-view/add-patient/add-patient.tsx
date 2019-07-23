@@ -23,7 +23,6 @@ class AddPatient extends React.Component<PatientData> {
 
     saveToStore = (data: object) => {
         this.props.addPatient(data);
-        this.props.add(data);
 
         this.setState({
             id: '',
@@ -42,7 +41,7 @@ class AddPatient extends React.Component<PatientData> {
                 <p>Add new patient</p>
                 <form onSubmit={ e => e.preventDefault() }>
                     <label htmlFor={'patient-id'}><span>Patient id</span>
-                        <input type="text"
+                        <input type="number"
                                id={'patient-id'}
                                name={'id'}
                                placeholder={'Patient id'}
@@ -75,7 +74,9 @@ class AddPatient extends React.Component<PatientData> {
                             onChange={this.addingHandler}
                         />
                     </label>
-                    <button disabled={(id === '' || name === '' || birthday === '' || sex === '')} type={'button'} onClick={() => this.saveToStore(this.state)}>Add</button>
+                    <button disabled={(id === '' || name === '' || birthday === '' || sex === '')}
+                            type={'button'}
+                            onClick={() => this.saveToStore(this.state)}>Add</button>
                 </form>
             </div>
         )
@@ -84,7 +85,7 @@ class AddPatient extends React.Component<PatientData> {
 
 export default connect(
     state => ({
-        state: state
+        patientsList: state.patientsList,
     }),
     dispatch => ({
         addPatient: (data: object) => {

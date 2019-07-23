@@ -10,7 +10,10 @@ const INITIAL_STATE = [
 export default (state = INITIAL_STATE, action:object) => {
     switch (action.type) {
         case 'SET_PATIENTS':
-            return Object.assign(state, state.push(action.payload));
+            return [
+                ...state,
+                action.payload
+            ];
         default:
             return state;
     }
