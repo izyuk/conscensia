@@ -1,34 +1,41 @@
 import * as React from 'react';
+import {connect} from "react-redux";
 
 interface Schedule {
     list?: any
 }
 
-const Schedule: React.FC<Schedule> = (props: Schedule) => {
+class Schedule extends React.Component<Schedule>{
+
+    public state:Schedule = {
+        list: ''
+    };
 
 
-
-    return (
-        <table>
-            <thead>
-            <tr>
-                <th>Patient</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Planned Start time</th>
-                <th>Estimated End time</th>
-                <th>Room</th>
-                <th>Doctor</th>
-            </tr>
-            </thead>
-            <tbody>
-            {props.list ? list.map((item, i) => {
-                return <tr><td></td></tr>
-            }): <tr><td colSpan={'7'} style={{textAlign: 'center'}}>Empty schedule</td></tr>}
-            </tbody>
-        </table>
-    )
-
+    render(){
+        return (
+            <table>
+                <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Planned Start time</th>
+                    <th>Estimated End time</th>
+                    <th>Room</th>
+                    <th>Doctor</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.props.children}
+                </tbody>
+            </table>
+        )
+    }
 }
 
-export default Schedule;
+export default connect(
+    state => ({
+        state: state
+    })
+)(Schedule);

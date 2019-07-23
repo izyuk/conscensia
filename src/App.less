@@ -36,3 +36,36 @@
 .app-name{
   text-align: center;
 }
+
+.main-view{
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  &>div{
+    width:100%;
+    max-width: 800px;
+    flex-direction: column;
+  }
+  div{
+    form{
+      display: flex;
+      flex-direction: column;
+      label{
+        display: flex;
+        align-items: center;
+        &:not(:last-child){
+          margin-bottom: 10px;
+        }
+      }
+      span{
+        display: inline-block;
+        width: 250px;
+      }
+      textarea, input {
+        width: 200px;
+        padding: 5px 10px;
+        height: 20px;
+      }
+    }
+  }
+}
